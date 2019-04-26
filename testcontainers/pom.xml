@@ -1,0 +1,16 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <groupId>org.infinispan</groupId>
+        <artifactId>infinispan-test-parent</artifactId>
+        <relativePath>../pom.xml</relativePath>
+        <version>0.1-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>infinispan-testcontainers</artifactId>
+    <name>Test Infinispan with TestContainers</name>
+    <description>Infinispan and Test Containers</description>
+
+</project>
