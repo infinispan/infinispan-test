@@ -1,4 +1,4 @@
-package org.infinispan.server.junit;
+package org.infinispan.testcontainers.junit4;
 
 import java.io.File;
 import java.net.URL;
@@ -13,10 +13,7 @@ import org.infinispan.client.hotrod.configuration.ConfigurationBuilder;
 import org.infinispan.commons.time.DefaultTimeService;
 import org.infinispan.commons.time.TimeService;
 import org.infinispan.commons.util.Util;
-import org.infinispan.rest.RestServer;
-import org.infinispan.rest.configuration.RestServerConfiguration;
 import org.infinispan.server.DefaultExitHandler;
-import org.infinispan.server.RestClient;
 import org.infinispan.server.Server;
 import org.infinispan.server.core.ProtocolServer;
 import org.infinispan.server.hotrod.HotRodServer;
@@ -25,8 +22,6 @@ import org.infinispan.test.TestingUtil;
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
 import org.junit.runners.model.Statement;
-
-//import net.spy.memcached.MemcachedClient;
 
 /**
  * @author Tristan Tarrant &lt;tristan@infinispan.org&gt;
@@ -38,8 +33,6 @@ public class ServerTestRule implements TestRule {
     int numServers = 2;
     TimeService timeService = DefaultTimeService.INSTANCE;
     RemoteCacheManager hotRodClient;
-    RestClient httpClient;
-    //   MemcachedClient memcachedClient;
 
     @Override
     public Statement apply(Statement base, Description description) {
@@ -124,44 +117,4 @@ public class ServerTestRule implements TestRule {
         }
         return hotRodClient;
     }
-
-    public RestClient restClient() {
-        if (httpClient == null) {
-            for (Server server : servers) {
-                for (ProtocolServer ps : server.getProtocolServers().values()) {
-                    if (ps instanceof RestServer) {
-                        RestServerConfiguration serverConfiguration = ((RestServer) ps).getConfiguration();
-                        String baseURI = String.format("%s://%s:%d/%s",
-                                serverConfiguration.ssl().enabled() ? "https" : "http",
-                                serverConfiguration.host(),
-                                serverConfiguration.port(),
-                                serverConfiguration.contextPath()
-                        );
-                        httpClient = new RestClient(baseURI);
-                    }
-                }
-            }
-        }
-        return httpClient;
-    }
-
-    //   public MemcachedClient memcachedClient() {
-    //      if (memcachedClient == null) {
-    //         List<InetSocketAddress> addresses = new ArrayList<>();
-    //         for (Server server : servers) {
-    //            for (ProtocolServer ps : server.getProtocolServers().values()) {
-    //               if (ps instanceof MemcachedServer) {
-    //                  MemcachedServerConfiguration serverConfiguration = ((MemcachedServer) ps).getConfiguration();
-    //                  addresses.add(new InetSocketAddress(serverConfiguration.host(), serverConfiguration.port()));
-    //               }
-    //            }
-    //         }
-    //         try {
-    //            memcachedClient = new MemcachedClient(addresses);
-    //         } catch (IOException e) {
-    //            throw new RuntimeException(e);
-    //         }
-    //      }
-    //      return memcachedClient;
-    //   }
 }

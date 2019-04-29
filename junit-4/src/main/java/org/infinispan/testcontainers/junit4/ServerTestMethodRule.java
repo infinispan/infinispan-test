@@ -1,4 +1,4 @@
-package org.infinispan.server.junit;
+package org.infinispan.testcontainers.junit4;
 
 import org.junit.rules.TestRule;
 import org.junit.runner.Description;
