@@ -41,7 +41,10 @@
         <infinispan.version>10.0.0.Beta3</infinispan.version>
         <junit4-version>4.12</junit4-version>
         <junit5-version>5.3.1</junit5-version>
+        <junit.vintage.version>5.3.1</junit.vintage.version>
+        <junit.platform.version>1.1.0</junit.platform.version>
         <testcontainers-version>1.11.1</testcontainers-version>
+        <maven-surefire-plugin.version>2.19.1</maven-surefire-plugin.version>
     </properties>
 
     <dependencyManagement>
@@ -81,6 +84,11 @@
                 <artifactId>junit-jupiter-engine</artifactId>
                 <version>${junit5-version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.junit.vintage</groupId>
+                <artifactId>junit-vintage-engine</artifactId>
+                <version>${junit5-version}</version>
+            </dependency>
 
             <!-- Testcontainers dependency -->
             <dependency>
@@ -102,4 +110,33 @@
         <module>testcontainers</module>
     </modules>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>${maven-surefire-plugin.version}</version>
+                <dependencies>
+                    <!-- let surefire run JUnit 4 but also JUnit 5 tests -->
+                    <dependency>
+                        <groupId>org.junit.platform</groupId>
+                        <artifactId>junit-platform-surefire-provider</artifactId>
+                        <version>${junit.platform.version}</version>
+                    </dependency>
+                    <!-- let JUnit vintage engine run JUnit 3 or JUnit 4 tests -->
+                    <dependency>
+                        <groupId>org.junit.vintage</groupId>
+                        <artifactId>junit-vintage-engine</artifactId>
+                        <version>${junit.vintage.version}</version>
+                    </dependency>
+                    <!-- let JUnit 5 engine run JUnit 5 tests -->
+                    <dependency>
+                        <groupId>org.junit.jupiter</groupId>
+                        <artifactId>junit-jupiter-engine</artifactId>
+                        <version>${junit5-version}</version>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
 </project>
