@@ -1,4 +1,4 @@
-package org.infinispan.testcontainers.testcontainers;
+package org.infinispan.test.testcontainers;
 
 import org.infinispan.client.hotrod.RemoteCacheManager;
 import org.infinispan.client.hotrod.configuration.ClientIntelligence;

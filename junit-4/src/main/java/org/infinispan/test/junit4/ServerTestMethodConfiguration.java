@@ -1,4 +1,4 @@
-package org.infinispan.testcontainers.junit4;
+package org.infinispan.test.junit4;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,4 +1,4 @@
-package org.infinispan.testcontainers.junit4;
+package org.infinispan.test.junit4;
 
 import java.io.File;
 import java.net.URL;

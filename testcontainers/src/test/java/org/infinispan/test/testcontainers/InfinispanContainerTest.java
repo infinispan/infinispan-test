@@ -3,7 +3,6 @@ package org.infinispan.test.testcontainers;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.infinispan.client.hotrod.RemoteCache;
-import org.infinispan.testcontainers.testcontainers.InfinispanContainer;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.junit.jupiter.Container;
