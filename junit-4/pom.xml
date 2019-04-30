@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>infinispan-junit-4</artifactId>
+    <artifactId>infinispan-junit4</artifactId>
     <name>Test Infinispan with JUnit 4</name>
     <description>Contains utilities for developing unit tests and integration tests backed with Infinispan</description>
 

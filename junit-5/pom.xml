@@ -7,7 +7,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>infinispan-junit-5</artifactId>
+    <artifactId>infinispan-junit5</artifactId>
     <name>Test Infinispan with JUnit 5</name>
     <dependencies>
         <dependency>
@@ -43,6 +43,10 @@
         <dependency>
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-client-hotrod</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-remote-query-server</artifactId>
         </dependency>
     </dependencies>
 
