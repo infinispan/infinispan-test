@@ -1,6 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
         <groupId>org.infinispan</groupId>
         <artifactId>infinispan-build-configuration-parent</artifactId>
@@ -12,7 +10,7 @@
     <artifactId>infinispan-test-parent</artifactId>
     <packaging>pom</packaging>
     <name>Infinispan Test Parent Pom</name>
-    <version>0.1-SNAPSHOT</version>
+    <version>0.1</version>
 
     <description>Contains utilities for developing unit tests and integration tests backed with Infinispan</description>
 
@@ -38,7 +36,7 @@
         <connection>scm:git:git@github.com:karesti/infinispan-test.git</connection>
         <developerConnection>scm:git:git@github.com:karesti/infinispan-test.git</developerConnection>
         <url>https://github.com/karesti/infinispan-test</url>
-        <tag>HEAD</tag>
+        <tag>infinispan-test-parent-0.1</tag>
     </scm>
 
     <properties>
