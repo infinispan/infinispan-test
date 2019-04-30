@@ -1,21 +1,8 @@
 language: java
-install: true
-branches:
-  only:
-    - master
-    - /^\d+\.\d+$/
+jdk:
+  - oraclejdk8
 cache:
   directories:
     - $HOME/.m2
-before_cache:
-  - rm -rf $HOME/.m2/repository/org/infinispan/
-jobs:
-  include:
-    - stage: test
-      name: "Unit tests - OracleJDK 8"
-      script: mvn -B -DtestLogLevel=OFF test
-      jdk: oraclejdk8
-    - stage: deploy
-      name: "Deploy to Sonatype's snapshots repository"
-      if: type != pull_request
-      script: bash .travis.deploy.artifacts.sh
+script:
+  - mvn clean install
