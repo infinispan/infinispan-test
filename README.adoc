@@ -1,3 +1,135 @@
 = Infinispan Test
 
 image:https://travis-ci.com/karesti/infinispan-test.svg?branch=master["Build Status", link="https://travis-ci.com/karesti/infinispan-test"]
+
+This library contains the utilities to help unit testing java applications backed with an Infinispan backend.
+
+Frameworks supported
+
+ * https://junit.org/junit5/[JUnit 5]
+ * https://www.testcontainers.org/[Testcontainers]
+ * https://junit.org/junit4/[JUnit 4]
+
+== JUnit 5 - Jupiter
+
+[source,xml]
+.pom.xml
+----
+<dependency>
+    <groupId>org.infinispan</groupId>
+    <artifactId>infinispan-junit5</artifactId>
+    <version>0.2</version>
+    <scope>test</scope>
+</dependency>
+----
+
+[source,java]
+.MyTest.java
+----
+public class InfinispanExtensionTest {
+
+    @RegisterExtension
+    InfinispanServerExtension server = InfinispanServerExtension.builder().build();
+
+    @Test
+    public void test() {
+        RemoteCacheManager remoteCacheManager = server.hotRodClient();
+        ...
+    }
+----
+
+You can override `host` and `port` using the builder. By default, values are `localhost` and `11222`.
+
+== Testcontainers
+
+A very simple container is provided to be used with Testcontainers.
+The image used is the latest `jboss/infinispan-server:latest`
+
+Add the dependency to the classpath
+
+[source,xml]
+.pom.xml
+----
+<dependency>
+    <groupId>org.infinispan</groupId>
+    <artifactId>infinispan-testcontainers</artifactId>
+    <version>0.2</version>
+    <scope>test</scope>
+</dependency>
+----
+
+Unit test example with JUnit 5
+
+[source,java]
+.MyTest.java
+----
+@Testcontainers
+public class InfinispanContainerTest {
+    @Container
+    private final static InfinispanContainer INFINISPAN_SERVER = new InfinispanContainer().withCache("mycache");
+
+    @AfterAll
+    public static void cleanup() {
+        INFINISPAN_SERVER.stop();
+    }
+
+    @Test
+    public void test() {
+        RemoteCache<String, String> cache = INFINISPAN_SERVER.getCacheManager().getCache("mycache");
+        ...
+    }
+}
+----
+
+== Junit 4
+
+Add the dependency to the classpath
+
+[source,xml]
+.pom.xml
+----
+<dependency>
+    <groupId>org.infinispan</groupId>
+    <artifactId>infinispan-junit4</artifactId>
+    <version>0.2</version>
+    <scope>test</scope>
+</dependency>
+----
+
+Usage
+
+[source,java]
+.MyTest.java
+----
+@ServerTestConfiguration
+public class ClusteredServerTest {
+
+    @ClassRule
+    public static ServerTestRule serverTestRule = new ServerTestRule();
+
+    @Rule
+    public ServerTestMethodRule serverTestMethodRule = new ServerTestMethodRule(serverTestRule);
+
+    @Test
+    @ServerTestMethodConfiguration
+    public void testCluster() {
+        RemoteCacheManager client = serverTestRule.hotRodClient();
+        ...
+    }
+}
+----
+
+=== @ServerTestConfiguration
+Class annotation. Two properties can be configured with this annotation:
+
+*configurationFile*: Default value is `clustered.xml`.
+
+*numServers*:  default 2;
+
+=== @ServerTestMethodConfiguration
+
+Method annotation. Two properties can be configured with this annotation:
+
+*cacheName*: The cache name. By default will create a cache name based on the method name
+
+*cacheConfig*: The configuration to use for the cache, in XML format. Empty by default.
