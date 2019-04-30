@@ -124,7 +124,7 @@ Class annotation. Two properties can be configured with this annotation:
 
 *configurationFile*: Default value is `clustered.xml`.
 
-*numServers*:  default 2;
+*numServers*: Number of servers in the cluster. 2 by default.
 
 === @ServerTestMethodConfiguration
 
