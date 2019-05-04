@@ -11,7 +11,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 public class InfinispanExtensionTest {
 
     @RegisterExtension
-    InfinispanServerExtension server = InfinispanServerExtension.builder().host("localhost").port(11333).build();
+    InfinispanServerExtension server = InfinispanServerExtension.builder().host("localhost").port(11333).withCaches("initCache").build();
 
     @Test
     public void getPut() {
@@ -20,6 +20,13 @@ public class InfinispanExtensionTest {
         defaultCache.put("jupiter", "works!");
 
         assertEquals("works!", defaultCache.get("jupiter"));
+    }
+
+    @Test
+    public void initCache() {
+        RemoteCacheManager remoteCacheManager = server.hotRodClient();
+        RemoteCache<String, String> initCache = remoteCacheManager.getCache("initCache");
+        assertNotNull(initCache);
     }
 
     @Test

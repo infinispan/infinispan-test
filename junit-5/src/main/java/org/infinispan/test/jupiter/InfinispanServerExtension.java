@@ -27,11 +27,12 @@ public class InfinispanServerExtension implements Extension, BeforeTestExecution
     private RemoteCacheManager hotRodClient;
     private final String host;
     private final int port;
+    private final String[] initialCaches;
 
-    public InfinispanServerExtension(String host, int port) {
-
+    public InfinispanServerExtension(String host, int port, String[] initialCaches) {
         this.host = host;
         this.port = port;
+        this.initialCaches = initialCaches;
     }
 
     public static final InfinispanServerExtensionBuilder builder() {
@@ -42,6 +43,7 @@ public class InfinispanServerExtension implements Extension, BeforeTestExecution
     public static class InfinispanServerExtensionBuilder {
         private String host = "localhost";
         private int port = 11222;
+        private String[] cacheNames = new String[0];
 
         public InfinispanServerExtensionBuilder host(String host) {
             this.host = host;
@@ -53,8 +55,13 @@ public class InfinispanServerExtension implements Extension, BeforeTestExecution
             return this;
         }
 
+        public InfinispanServerExtensionBuilder withCaches(String... cacheName) {
+            this.cacheNames = cacheName;
+            return this;
+        }
+
         public InfinispanServerExtension build() {
-            return new InfinispanServerExtension(host, port);
+            return new InfinispanServerExtension(host, port, cacheNames);
         }
     }
 
@@ -75,6 +82,10 @@ public class InfinispanServerExtension implements Extension, BeforeTestExecution
             EmbeddedCacheManager ecm = TestCacheManagerFactory.createCacheManager(
                     new GlobalConfigurationBuilder().nonClusteredDefault().defaultCacheName("default"),
                     new ConfigurationBuilder());
+
+            for(String cacheName: initialCaches) {
+                ecm.createCache(cacheName, new ConfigurationBuilder().build());
+            }
             HotRodServerConfigurationBuilder serverBuilder = new HotRodServerConfigurationBuilder();
             serverBuilder.adminOperationsHandler(new EmbeddedServerAdminOperationHandler());
             hotRodServer = HotRodTestingUtil.startHotRodServer(ecm, host, port, 0, serverBuilder);
