@@ -71,6 +71,7 @@ public class InfinispanServerExtension implements Extension, BeforeTestExecution
             HotRodServerConfiguration serverConfiguration = hotRodServer.getConfiguration();
             builder.addServer().host(serverConfiguration.publicHost())
                     .port(serverConfiguration.publicPort());
+            builder.statistics().enable();
             hotRodClient = new RemoteCacheManager(builder.build());
         }
         return hotRodClient;
