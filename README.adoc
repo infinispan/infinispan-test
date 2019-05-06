@@ -1,6 +1,6 @@
 = Infinispan Test
 
-image:https://travis-ci.com/karesti/infinispan-test.svg?branch=master["Build Status", link="https://travis-ci.com/karesti/infinispan-test"]
+image:https://travis-ci.org/infinispan/infinispan-test.svg?branch=master["Build Status", link="https://travis-ci.org/infinispan/infinispan-test"]
 
 This library contains the utilities to help unit testing java applications backed with an Infinispan backend.
 
