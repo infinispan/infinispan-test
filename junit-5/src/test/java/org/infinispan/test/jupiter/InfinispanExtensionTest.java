@@ -1,5 +1,6 @@
 package org.infinispan.test.jupiter;
 
+import static org.infinispan.test.jupiter.InfinispanServerExtension.builder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
@@ -11,7 +12,7 @@ import org.junit.jupiter.api.extension.RegisterExtension;
 public class InfinispanExtensionTest {
 
     @RegisterExtension
-    InfinispanServerExtension server = InfinispanServerExtension.builder().host("localhost").port(11333).withCaches("initCache").build();
+    InfinispanServerExtension server = builder().host("localhost").port(11333).withCaches("initCache").startBeforerEach(true).stopAfterEach(true).build();
 
     @Test
     public void getPut() {
@@ -31,6 +32,13 @@ public class InfinispanExtensionTest {
 
     @Test
     public void administration() {
+        RemoteCacheManager remoteCacheManager = server.hotRodClient();
+        RemoteCache<Object, Object> test = remoteCacheManager.administration().getOrCreateCache("test", "default");
+        assertNotNull(test);
+    }
+
+    @Test
+    public void cache_config() {
         RemoteCacheManager remoteCacheManager = server.hotRodClient();
         RemoteCache<Object, Object> test = remoteCacheManager.administration().getOrCreateCache("test", "default");
         assertNotNull(test);

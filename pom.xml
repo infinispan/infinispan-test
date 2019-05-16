@@ -88,6 +88,12 @@
                 <version>${infinispan.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.infinispan</groupId>
+                <artifactId>infinispan-clustered-counter</artifactId>
+                <version>${infinispan.version}</version>
+            </dependency>
+
             <!-- JUnit 4 dependency -->
             <dependency>
                 <groupId>junit</groupId>

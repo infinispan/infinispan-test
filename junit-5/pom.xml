@@ -40,6 +40,10 @@
             <groupId>org.infinispan</groupId>
             <artifactId>infinispan-remote-query-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.infinispan</groupId>
+            <artifactId>infinispan-clustered-counter</artifactId>
+        </dependency>
     </dependencies>
 
 </project>
